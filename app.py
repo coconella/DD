@@ -5,6 +5,7 @@ from pymongo import MongoClient
 client = MongoClient('localhost', 27017)
 db = client.dbsparta
 
+
 # 방명록 불러오기 index_2.html
 @app.route('/')
 def home():
