@@ -1,0 +1,58 @@
+        .wrap {
+            width: 800px;
+            margin: 50px auto;
+        }
+
+        .col {
+            margin-right: 1rem;
+        }
+
+        .col review_name {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            float: left;
+            text-align: center;
+        }
+
+        .hi {
+            width: 150px;
+        }
+
+        .review_title {
+            width: 220px;
+            margin: 0px -240px;
+            float: left;
+            text-align: center;
+        }
+
+        .col col-12 review_season {
+            width: 400px;
+            float: right;
+        }
+
+        .review_where {
+            width: 400px;
+            float: left;
+            text-align: center;
+        }
+
+        .review_photo {
+            width: 400px;
+            float: right;
+            text-align: center;
+        }
+        .icon {
+            width: 20px;
+        }
+        .review_box {
+            width: 780px;
+            height: 200px;
+        }
+        .review_type {
+            width: 800px;
+        }
+        .save {
+            width: 200px;
+            margin: 40px auto;
+        }

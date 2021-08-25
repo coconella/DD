@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+
+    <!--    #css-->
+    <link href='{{ url_for("static",filename="test_css.css") }}' rel="stylesheet">
+
+    <!--    #자바스크립트-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+
+    <title>꼬마닌자단 여행리뷰</title>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            show_review();
+        });
+
+        function make_review() {
+            let writer = $('#writer').val();
+            let title = $('#title').val();
+            let season = $('#season').val();
+            let where = $('#where').val();
+            let photo = $('#photo').val();
+            let review = $('#review').val();
+            let type = $('#type').val();
+
+            $.ajax({
+                type: "POST",
+                url: "/review",
+                data: {writer_give: writer,title_give: title,season_give: season,where_give: where,photo_give: photo,review_give: review,type_give: type},
+                success: function (response) {
+                    alert(response["msg"]);
+                    window.location.reload();
+                }
+            })
+        }
+        function show_review() {
+            $.ajax({
+                type: "GET",
+                url: "/review",
+                data: {},
+                success: function (response) {
+                    let travel_reviews = response['all_reviews']
+                    for (let i = 0; i < travel_reviews.length; i++) {
+                        let writer = comments[i]['writer']
+                        let title = comments[i]['title']
+                        let season = comments[i]['season']
+                        let where = comments[i]['where']
+                        let photo = comments[i]['photo']
+                        let review = comments[i]['review']
+                        let type = comments[i]['type']
+
+                        let temp_html = ``
+                        $('#test_form').append(temp_html)
+                    }
+                }
+            })
+        }
+    </script>
+
+</head>
+<body>
+<div class="wrap">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
+            crossorigin="anonymous"></script>
+    <!--        #리뷰 작성자 입력-->
+    <div class="row">
+        <div class="col">
+            <p class="hi"><input id="writer" type="text" class="form-control" placeholder="이름은 여기에!"></p>
+        </div>
+        <!--        #리뷰 제목 입력-->
+        <div class="col">
+            <input id="title" type="text" class="form-control review_title" placeholder="제목을 입력하세요.">
+            <!--        #계절 선택-->
+            <div class="col col-12 review_season">
+                <label class="visually-hidden" for="inlineFormSelectPref">Preference</label>
+                <select class="form-select" id="season">
+                    <option selected>계절을 선택하세요.</option>
+                    <option value="1">봄</option>
+                    <option value="2">여름</option>
+                    <option value="3">가을</option>
+                    <option value="4">겨울</option>
+                </select>
+            </div>
+        </div>
+        <!-- 지역 선택 -->
+        <p>
+        <div class="col-12 review_where"></p>
+            <label class="visually-hidden" for="inlineFormSelectPref">Preference</label></p>
+            <select class="form-select" id="where">
+                <option selected>지역을 선택하세요.</option>
+                <option value="1">서울</option>
+                <option value="2">경기</option>
+                <option value="3">인천</option>
+                <option value="4">강원</option>
+                <option value="5">충청남도</option>
+                <option value="6">충청북도</option>
+                <option value="7">대전</option>
+                <option value="8">경상북도</option>
+                <option value="9">경상남도</option>
+                <option value="10">대구</option>
+                <option value="11">울산</option>
+                <option value="12">부산</option>
+                <option value="13">전라도</option>
+                <option value="14">전라남도</option>
+                <option value="15">광주</option>
+                <option value="16">제주</option>
+                <option value="17">그 외</option>
+            </select>
+        <!-- 사진 올리기 -->
+        </div>
+        <div class="input-group mb-3 review_photo">
+            <input type="file" class="form-control" id="photo">
+            <label class="input-group-text" for="inputGroupFile02"><img class="icon" src="/static/upload.ico" alt="My Image"></label>
+        </div>
+         <!-- 리뷰 작성 -->
+        <div class="mb-3">
+            <label for="exampleFormControlTextarea1" class="form-label"></label>
+            <textarea class="form-control review_box" id="review"
+                      rows="3">여행을 생동감 있게 설명해주세요!</textarea>
+        </div>
+         <!-- 여행 타입 선택-->
+        <div class="col col-12 review_type">
+            <label class="visually-hidden" for="inlineFormSelectPref">Preference</label>
+            <select class="form-select" id="type">
+                <option selected>키워드를 선택하세요.</option>
+                <option value="1">가족</option>
+                <option value="2">우정</option>
+                <option value="3">데이트</option>
+                <option value="4">힐링</option>
+                <option value="4">먹방</option>
+            </select>
+         <!-- 리뷰 작성 저장 -->
+        </div>
+        <form class="save">
+        <button onclick="make_review()" type="submit" class="btn btn-primary"><b>리뷰 작성</b></button>
+        </form></div>
+
+{#    #보이는지 확인용 폼#}
+    <div id="test_form" class="test"></div>
+</div>
+</body>
+</html>

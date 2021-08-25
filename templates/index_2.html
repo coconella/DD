@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!--    #css-->
+    <link href='{{ url_for("static",filename="CSS_1.css") }}' rel="stylesheet">
+
+    <!--    #자바스크립트-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+
+    <!--    #api 자바스크립트-->
+    <script type="text/javascript">
+        $(document).ready(function () {
+            comment_show();
+        });
+
+        function make_comment() {
+            let comment = $('#comment_write').val();
+
+            $.ajax({
+                type: "POST",
+                url: "/comment",
+                data: {comment_give: comment},
+                success: function (response) {
+                    alert(response["msg"]);
+                    window.location.reload();
+                }
+            })
+        }
+
+        function comment_show() {
+            $.ajax({
+                type: "GET",
+                url: "/comment",
+                data: {},
+                success: function (response) {
+                    let comments = response['all_comments']
+                    for (let i = 0; i < comments.length; i++) {
+                        let comment = comments[i]['comment']
+
+                        let temp_html = ` <div id="wrapper">
+                                            <div class="item">${comment}</div>
+                                        </div>`
+                        $('#wrapper').append(temp_html)
+                    }
+                }
+            })
+        }
+    </script>
+
+    <title>Title</title>
+</head>
+<body>
+<div class="wrap">
+    <!--    #방명록 입력창-->
+    <div class="mb-3">
+        <form>
+            <div class="comment">
+{#               <a href="review"><h3> 여행리뷰</h3></a>#}
+               <input type="text" placeholder="간단한 인사, 소감 또는 정보공유 무엇이든지 환영합니다!(20자 이내)" class="form-control guest"
+                          id="comment_write">
+                <button onclick="make_comment()" type="submit" class="btn btn-primary"><b>댓글 달기</b></button>
+            </div>
+        </form>
+    </div>
+    <!--    #방명록-->
+    <div id="wrapper" class="wrapper"></div>
+</div>
+</body>
+</html>
